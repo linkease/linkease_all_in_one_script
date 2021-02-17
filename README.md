@@ -1,0 +1,2 @@
+# linkease_all_in_one_script
+易有云一键安装脚本
