@@ -5,11 +5,11 @@ export PATH
 
 version="1.0"
 APP_URL='http://firmware.koolshare.cn/binary/LinkEase/Openwrt'
-app_arm='linkease-arm.ipk'
-app_aarch64='linkease-aarch64.ipk'
-app_x86='linkease-x86.ipk'
-app_ui='luci-app-linkease_1.0.0-1_all.ipk'
-app_lng='luci-i18n-linkease-zh-cn_1.0.0-1_all.ipk'
+app_arm='linkease_arm.ipk'
+app_aarch64='linkease_aarch64.ipk'
+app_x86='linkease_x86_64.ipk'
+app_ui='luci-app-linkease.ipk'
+app_lng='luci-i18n-linkease-zh-cn.ipk'
 
 setup_color() {
     # Only use colors if connected to a terminal
@@ -48,7 +48,7 @@ Download_Files(){
 }
 
 clean_app(){
-    rm -f /tmp/${app_x86} /tmp/${app_arm} /tmp/${app_mips} /tmp/${app_ui} /tmp/${app_lng}
+    rm -f /tmp/${app_x86} /tmp/${app_arm} /tmp/${app_aarch64} /tmp/${app_ui} /tmp/${app_lng} 
 }
 
 command_exists opkg || {
@@ -75,14 +75,13 @@ elif  echo `uname -m` | grep -Eqi 'arm'; then
       opkg install /tmp/${app_lng}; )
 elif  echo `uname -m` | grep -Eqi 'aarch64'; then
     arch='aarch64'
-    ( set -x; Download_Files ${APP_URL}/${app_arm} /tmp/${app_arm};
+    ( set -x; Download_Files ${APP_URL}/${app_aarch64} /tmp/${app_aarch64};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
       opkg install /tmp/${app_aarch64};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
-elif  echo `uname -m` | grep -Eqi 'mipsel'; then
-    arch='mips'
+elif  echo `uname -m` | grep -Eqi 'mips|mipsel'; then
     error "The program not support mips."
     exit 1
 else
@@ -94,7 +93,7 @@ cat <<-'EOF'
   linkease is now installed!
 
 
-  这里写一些需要显示的字，或者删除.
+  安装成功，请到 https://www.linkease.com/ 获取更多帮助
 
 EOF
 printf "$RESET"
