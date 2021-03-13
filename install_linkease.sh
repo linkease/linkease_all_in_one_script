@@ -100,20 +100,22 @@ fi
 
 echo "The linkease version is:"
 linkease showVersion
+
 if [ $? -eq 0 ]; then
-  printf "$GREEN"
-  cat <<-'EOF'
-    linkease is now installed!
-
-
-    安装成功，请到 https://www.linkease.com/ 获取更多帮助
-
-  EOF
-  printf "$RESET"
-  clean_app
+  echo "Install OK"
 else
   clean_app
-  echo "安装失败"
+  echo "Install failed(安装失败)"
   exit 2
 fi
 
+printf "$GREEN"
+cat <<-'EOF'
+  linkease is now installed!
+
+
+  安装成功，请到 https://www.linkease.com/ 获取更多帮助
+
+EOF
+printf "$RESET"
+clean_app
