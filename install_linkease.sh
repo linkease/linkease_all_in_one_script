@@ -45,6 +45,12 @@ Download_Files(){
   elif command_exists wget; then
     wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate ${URL} -O ${FileName}
   fi
+  if [ $? -eq 0 ]; then
+    echo "Download OK"
+  else
+    echo "Download failed"
+    exit 1
+  fi
 }
 
 clean_app(){
@@ -62,6 +68,7 @@ if echo `uname -m` | grep -Eqi 'x86_64'; then
     ( set -x; Download_Files ${APP_URL}/${app_x86} /tmp/${app_x86};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
+      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_x86};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
@@ -70,6 +77,7 @@ elif  echo `uname -m` | grep -Eqi 'arm'; then
     ( set -x; Download_Files ${APP_URL}/${app_arm} /tmp/${app_arm};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
+      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_arm};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
@@ -78,6 +86,7 @@ elif  echo `uname -m` | grep -Eqi 'aarch64'; then
     ( set -x; Download_Files ${APP_URL}/${app_aarch64} /tmp/${app_aarch64};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
+      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_aarch64};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
@@ -88,14 +97,23 @@ else
     error "The program only supports Openwrt."
     exit 1
 fi
-printf "$GREEN"
-cat <<-'EOF'
-  linkease is now installed!
+
+echo "The linkease version is:"
+linkease showVersion
+if [ $? -eq 0 ]; then
+  printf "$GREEN"
+  cat <<-'EOF'
+    linkease is now installed!
 
 
-  安装成功，请到 https://www.linkease.com/ 获取更多帮助
+    安装成功，请到 https://www.linkease.com/ 获取更多帮助
 
-EOF
-printf "$RESET"
-clean_app
+  EOF
+  printf "$RESET"
+  clean_app
+else
+  clean_app
+  echo "安装失败"
+  exit 2
+fi
 
