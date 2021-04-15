@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CUR=`pwd`
-VER=0.3.52-1
+VER=0.3.55-1
 rebuild_ipk() {
   rm -rf tmp && mkdir tmp && cd tmp
   tar -zxvf ${CUR}/$1
@@ -34,8 +34,13 @@ wget https://firmware.koolshare.cn/binary/LinkEase/Openwrt/linkease_aarch64.ipk
 wget https://firmware.koolshare.cn/binary/LinkEase/Openwrt/linkease_arm.ipk
 wget https://firmware.koolshare.cn/binary/LinkEase/Openwrt/linkease_x86_64.ipk
 
-BASE_DIR=/TODO
+if [ -z "$BASE_DIR" ]; then
+  BASE_DIR=/TODO
+  echo "BASE_DIR not set"
+  exit 1
+fi
+
 rebuild_ipk linkease_aarch64.ipk ${BASE_DIR}/raspi.arm64
 rebuild_ipk linkease_arm.ipk ${BASE_DIR}/raspi.arm
-rebuild_ipk linkease_arm.ipk ${BASE_DIR}/linkease.amd64
+rebuild_ipk linkease_x86_64.ipk ${BASE_DIR}/linkease.amd64
 
