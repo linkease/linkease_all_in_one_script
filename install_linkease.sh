@@ -4,7 +4,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 version="1.0"
-APP_URL='http://firmware.koolshare.cn/binary/LinkEase/Openwrt'
+APP_URL='http://fw.koolcenter.com/binary/LinkEase/Openwrt'
 app_arm='linkease_arm.ipk'
 app_aarch64='linkease_aarch64.ipk'
 app_x86='linkease_x86_64.ipk'
