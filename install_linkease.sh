@@ -68,7 +68,7 @@ if echo `uname -m` | grep -Eqi 'x86_64'; then
     ( set -x; Download_Files ${APP_URL}/${app_x86} /tmp/${app_x86};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
-      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
+      opkg remove app-meta-linkease luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_x86};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
@@ -77,7 +77,7 @@ elif  echo `uname -m` | grep -Eqi 'arm'; then
     ( set -x; Download_Files ${APP_URL}/${app_arm} /tmp/${app_arm};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
-      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
+      opkg remove app-meta-linkease luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_arm};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
@@ -86,7 +86,7 @@ elif  echo `uname -m` | grep -Eqi 'aarch64'; then
     ( set -x; Download_Files ${APP_URL}/${app_aarch64} /tmp/${app_aarch64};
       Download_Files ${APP_URL}/${app_ui} /tmp/${app_ui};
       Download_Files ${APP_URL}/${app_lng} /tmp/${app_lng};
-      opkg remove luci-i18n-linkease-zh-cn luci-app-linkease linkease
+      opkg remove app-meta-linkease luci-i18n-linkease-zh-cn luci-app-linkease linkease
       opkg install /tmp/${app_aarch64};
       opkg install /tmp/${app_ui};
       opkg install /tmp/${app_lng}; )
